@@ -1,0 +1,10 @@
+ultralytics
+flask
+flask-cors
+requests
+python-dotenv
+torch
+torchvision
+gunicorn
+python-multipart
+opencv-python

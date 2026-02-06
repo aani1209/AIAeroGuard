@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  aeroguard-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aeroguard-ai
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_DEBUG=False
+      - SENDER_EMAIL=${SENDER_EMAIL:-your_email@gmail.com}
+      - SENDER_PASSWORD=${SENDER_PASSWORD:-your_app_password}
+      - RECIPIENT_EMAIL=${RECIPIENT_EMAIL:-alert@example.com}
+      - SMTP_SERVER=smtp.gmail.com
+      - SMTP_PORT=587
+    volumes:
+      # Optional: persist threat logs
+      - ./threat_logs:/app/threat_logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# Optional: Add nginx reverse proxy
+# services:
+#   nginx:
+#     image: nginx:alpine
+#     ports:
+#       - "80:80"
+#     volumes:
+#       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+#     depends_on:
+#       - aeroguard-ai
