@@ -1,0 +1,28 @@
+{
+  "nodes": [
+    {
+      "parameters": {"path": "drone-alert", "method": "POST"},
+      "name": "Drone Webhook",
+      "type": "n8n-nodes-base.webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [{"value1": "={{$json.confidence}}", "operation": "larger", "value2": 0.75}]
+        }
+      },
+      "name": "Threat Check",
+      "type": "n8n-nodes-base.if"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:5000/trigger",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParametersJson": "={\"status\": \"confirmed\"}"
+      },
+      "name": "Trigger Backend",
+      "type": "n8n-nodes-base.httpRequest"
+    }
+  ]
+}

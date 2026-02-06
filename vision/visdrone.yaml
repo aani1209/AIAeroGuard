@@ -1,0 +1,8 @@
+path: C:/Users/Aadya/OneDrive/Desktop/AeroGuardAI/vision/dataset/VisDrone/yolo_format
+
+train: images/train
+val: images/val
+
+nc: 1
+names:
+  - drone
