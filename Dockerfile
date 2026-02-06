@@ -31,7 +31,6 @@ COPY backend ./backend
 COPY logic ./logic
 COPY vision ./vision
 COPY jammer_sim.py .
-COPY .env .env
 
 # Copy pre-built YOLO model
 COPY yolov8n.pt .
